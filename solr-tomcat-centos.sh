@@ -14,7 +14,8 @@ service tomcat6 start
  
 chkconfig tomcat6 on
  
-cat > $U_CONF <<U_CONF <?xml version='1.0' encoding='utf-8'?>
+cat <<U_CONF > $U_CONF 
+<?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
 <role rolename='manager'/>
 <user username='admin' password='admin' roles='manager'/>
