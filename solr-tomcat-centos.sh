@@ -8,19 +8,18 @@ SOLR=solr-$SOLR_V
 TOMCAT_LIB=/usr/share/tomcat6/lib
 HOME_SOLR=/home/solr
  
-yum install -y java
- 
-yum install -y tomcat6 tomcat6-webapps tomcat6-admin-webapps
+yum install -y java tomcat6 tomcat6-webapps tomcat6-admin-webapps
  
 service tomcat6 start
  
 chkconfig tomcat6 on
  
-echo "<?xml version='1.0' encoding='utf-8'?>" > $U_CONF
-echo "<tomcat-users>" >> $U_CONF
-echo "<role rolename='manager'/>" >> $U_CONF
-echo "<user username='admin' password='admin' roles='manager'/>" >> $U_CONF
-echo "</tomcat-users>" >> $U_CONF
+cat > $U_CONF <<U_CONF <?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+<role rolename='manager'/>
+<user username='admin' password='admin' roles='manager'/>
+</tomcat-users>
+U_CONF
  
 wget -c http://ftp.unicamp.br/pub/apache//commons/logging/binaries/$C_LOGG-bin.tar.gz
 tar zxf $C_LOGG-bin.tar.gz
@@ -38,11 +37,12 @@ mkdir -p /home/solr
 cp -R $SOLR/example/solr/* $HOME_SOLR
 chown -R tomcat $HOME_SOLR
  
-echo "Incluir em /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml"
-echo "<env-entry>"
-echo "<env-entry-name>solr/home</env-entry-name>"
-echo "<env-entry-value>/home/solr</env-entry-value>"
-echo "<env-entry-type>java.lang.String</env-entry-type>"
-echo "</env-entry>"
+cat <<ECHO Incluir em /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml
+<env-entry>
+<env-entry-name>solr/home</env-entry-name>
+<env-entry-value>/home/solr</env-entry-value>
+<env-entry-type>java.lang.String</env-entry-type>
+</env-entry>
+ECHO
  
 service tomcat6 restart
