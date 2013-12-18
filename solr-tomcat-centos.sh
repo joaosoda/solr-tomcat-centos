@@ -38,7 +38,8 @@ mkdir -p /home/solr
 cp -R $SOLR/example/solr/* $HOME_SOLR
 chown -R tomcat $HOME_SOLR
  
-cat <<ECHO Incluir em /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml
+cat <<ECHO
+Incluir em /usr/share/tomcat6/webapps/solr/WEB-INF/web.xml
 <env-entry>
 <env-entry-name>solr/home</env-entry-name>
 <env-entry-value>/home/solr</env-entry-value>
